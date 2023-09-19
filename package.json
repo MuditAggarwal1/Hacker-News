@@ -1,0 +1,140 @@
+{
+  "name": "react-hackernews",
+  "version": "0.0.12",
+  "description": "HackerNews clone built with React, ReactRouter & Redux, with server-side rendering",
+  "repository": "git@github.com:JounQin/react-hackernews.git",
+  "author": "JounQin <admin@1stg.me>",
+  "license": "MIT",
+  "scripts": {
+    "build": "rimraf dist && cross-env DEBUG=1stg:* NODE_ENV=production run-p build:react:client build:react:server build:server build:template",
+    "build:react:client": "webpack --config=build/react.client.babel.js --color --progress",
+    "build:react:server": "webpack --config=build/react.server.babel.js --color --progress",
+    "build:server": "webpack --config build/server.babel.js --color --progress",
+    "build:template": "mkdir -p dist/static && node build/template.js",
+    "dev": "cross-env DEBUG=1stg:* babel-node server",
+    "lint": "eslint . --ignore-path .gitignore --max-warnings=10",
+    "pm2": "yarn sync:pull && cross-env PORT=8000 pm2 start --name=react-hn npm -- start",
+    "postinstall": "yarn-deduplicate || exit 0",
+    "prune": "yarn install --production --ignore-optional --ignore-scripts --prefer-offline --force",
+    "start": "cross-env DEBUG=1stg:* NODE_ENV=production node dist/server",
+    "sync:now": "bash build/sync-now.sh",
+    "sync:pull": "bash build/sync-pull.sh",
+    "sync:push": "bash build/sync-push.sh"
+  },
+  "dependencies": {
+    "connected-react-router": "^6.8.0",
+    "core-js": "^3.26.1",
+    "cross-env": "^7.0.3",
+    "debug": "^4.3.4",
+    "firebase": "^8.1.1",
+    "history": "^4.10.1",
+    "hoist-non-react-statics": "^3.3.2",
+    "koa": "^2.13.4",
+    "koa-cash": "^4.0.5",
+    "koa-compose": "^4.1.0",
+    "koa-compress": "^5.0.1",
+    "koa-logger": "^3.2.1",
+    "koa-mount": "^4.0.0",
+    "koa-static-cache": "^5.1.4",
+    "lodash-es": "^4.17.21",
+    "lru-cache": "^6.0.0",
+    "path-to-regexp": "^6.2.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-loadable": "^5.5.0",
+    "react-redux": "^7.2.9",
+    "react-router": "^5.2.0",
+    "react-router-config": "^5.1.1",
+    "react-router-dom": "^5.2.0",
+    "react-server-renderer": "^1.2.0",
+    "react-transition-group": "^4.4.5",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "serialize-javascript": "^5.0.1"
+  },
+  "devDependencies": {
+    "@1stg/app-config": "^0.5.5",
+    "@babel/node": "^7.19.1",
+    "babel-loader": "^8.2.5",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "css-loader": "^5.2.7",
+    "eslint": "^7.32.0",
+    "eslint-import-resolver-babel-module": "^5.3.1",
+    "friendly-errors-webpack-plugin": "^1.7.0",
+    "html-minifier": "^4.0.0",
+    "husky": "^4.3.8",
+    "koa-webpack": "^6.0.0",
+    "lint-staged": "^10.5.4",
+    "mini-css-extract-plugin": "^1.6.2",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.4.16",
+    "postcss-loader": "^4.3.0",
+    "prop-types": "^15.8.1",
+    "pug": "^3.0.2",
+    "pug-plain-loader": "^1.1.0",
+    "react-style-loader": "^2.3.0",
+    "rimraf": "^3.0.2",
+    "sass": "^1.55.0",
+    "sass-loader": "^10.3.1",
+    "sw-precache-webpack-plugin": "^1.0.0",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-merge": "^5.4.0",
+    "webpack-node-externals": "^2.5.2",
+    "yarn-deduplicate": "^3.1.0"
+  },
+  "resolutions": {
+    "imagemin-gifsicle": "^6.0.1",
+    "prettier": "^2.7.1"
+  },
+  "browserslist": [
+    "extends @1stg/browserslist-config"
+  ],
+  "commitlint": {
+    "extends": "@1stg"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@1stg/eslint-config/loose"
+    ],
+    "settings": {
+      "import/resolver": {
+        "babel-module": {}
+      },
+      "node": {
+        "allowModules": [
+          "lodash"
+        ]
+      }
+    },
+    "parserOptions": {
+      "ecmaFeatures": {
+        "legacyDecorators": true
+      }
+    },
+    "env": {
+      "browser": true
+    },
+    "globals": {
+      "__DEV__": false,
+      "__SERVER__": false
+    },
+    "rules": {
+      "node/no-missing-import": 0
+    },
+    "overrides": [
+      {
+        "files": "**/store/*",
+        "rules": {
+          "sonarjs/no-small-switch": 0
+        }
+      }
+    ]
+  },
+  "prettier": "@1stg/prettier-config",
+  "renovate": {
+    "extends": [
+      "1stg"
+    ]
+  }
+}
